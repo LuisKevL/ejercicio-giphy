@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIPHY App</title>
+   <!-- ingresar icono en la ventana: link::favicon--> <link rel="shortcut icon" href="./assets/img/masc.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand">LOGO</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active center" aria-current="page" href="#">
+                    <i data-feather="search"></i>Buscar GIF</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active center" aria-current="page" href="#">
+                    <i data-feather="gift"></i>Random GIF</a>
+              </li>
+             
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid mt-5">
+            <div class="row">
+                <div class="col-4">
+                    
+                        <div class="form-row form-group">
+                            <label for="search">Buscar GIF</label>
+                            <input type="text" id="search" class="form-control" placeholder="..."
+                            />
+                        </div>
+                    
+                </div>
+                <div class="col-8">
+                  <div id="gifs">
+
+                  </div>
+                </div>
+            </div>
+      </div>
+
+      <script>
+        feather.replace();
+        const api_key = "77yirlJe2Xnafn7qcRmYUTDZ9gBvSwCU";
+        const search = document.getElementById('search');
+        const gifs = document.getElementById('gifs');
+        search.onkeyup = async (event) => {
+          event.preventDefault();
+          console.log(event);
+          if (event.keyCode !== 13) return;
+          const response = await fetch(
+            `http://api.giphy.com/v1/gifs/search?api_key=${api_key}&q=${search.value}`
+          );
+          const data = await response.json();
+          console.log(data);
+          let content = '';
+          data.data.map((gif, index) => {
+            content +=`<img src="${gif.images.original.url}" class="mb-3 ms-1 " alt="${gif.title}">`;
+          });
+          gifs.innerHTML = content;
+          
+        };
+      </script>
+</body>
+</html> 
