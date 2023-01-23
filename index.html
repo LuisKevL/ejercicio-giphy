@@ -74,6 +74,19 @@
           gifs.innerHTML = content;
           
         };
+          window.onload = async()=>{
+          const response = await fetch(
+            `http://api.giphy.com/v1/gifs/random?api_key=${api_key}`
+          );
+          const data = await response.json();
+          const gifs = document.getElementById('gifs');
+          const img = document.createElement('img');
+          console.log(data);
+          gifs.innerHTML = "";
+          img.src = data.data.images.original.url;
+          img.alt = data.data.title;
+          gifs.appendChild(img);
+        };
       </script>
 </body>
 </html> 
